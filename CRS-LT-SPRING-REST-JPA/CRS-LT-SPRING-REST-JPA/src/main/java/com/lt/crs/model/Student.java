@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 
@@ -39,6 +40,20 @@ public class Student {
 	@Column(name = "isReportGenerated")
 	public  String isReportGenerated;
 
+	@Transient
+	public  String address;
+	
+	@Transient
+	public  String gender;
+	
+	@Transient
+	public  String name;
+	
+	@Transient
+	public  String password;
+	
+	@Transient
+	public  String role="STUDENT";
 	
 
 	public Student() {
@@ -111,6 +126,48 @@ public class Student {
 
 	public void setIsReportGenerated(String isReportGenerated) {
 		this.isReportGenerated = isReportGenerated;
+	}
+	
+	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	@Override
