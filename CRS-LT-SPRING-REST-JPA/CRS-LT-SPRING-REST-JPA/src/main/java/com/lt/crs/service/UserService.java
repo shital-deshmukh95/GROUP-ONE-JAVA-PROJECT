@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.crs.lt.exceptions.UserNotFoundException;
 import com.lt.crs.model.User;
 import com.lt.crs.repository.UserRepository;
 
@@ -48,6 +49,13 @@ public class UserService {
 			role  = user.get().getRole();
 		}
 		return  role;
+	}
+
+
+	public boolean verifyCredentials(String userId, String password) throws UserNotFoundException {
+		
+		//need to work 
+		return false;
 	}
 
 
