@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.crs.lt.constant.GenderConstant;
+import com.crs.lt.constant.RoleConstant;
+
 
 /**
  * 
@@ -14,6 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User {
+	
 	@Id
 	public String userId;
 	
@@ -44,6 +48,16 @@ public class User {
 		this.gender = gender;
 		this.address = address;
 		this.role = role;
+	}
+
+	public User(String userId2, String name2, RoleConstant role2, String password2, GenderConstant gender2,
+			String address2) {
+		this.userId = userId;
+		this.name = name;
+		this.role = role;
+		this.password = password;
+		this.gender = gender;
+		this.address = address;
 	}
 
 	public String getUserId() {

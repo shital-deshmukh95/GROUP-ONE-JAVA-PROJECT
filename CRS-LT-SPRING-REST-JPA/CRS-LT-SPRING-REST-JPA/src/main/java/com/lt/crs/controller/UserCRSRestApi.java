@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crs.lt.exceptions.UserNotFoundException;
 import com.lt.crs.model.User;
 import com.lt.crs.service.UserService;
 
@@ -61,6 +62,22 @@ public class UserCRSRestApi {
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/user/verifyCredentials/{userId}/{password}")
+	@ResponseBody
+	public ResponseEntity<?> verifyCredentials(@PathVariable(value = "userId") String userId,
+			@PathVariable(value = "password") String password) {
+		boolean result;
+		try {
+
+			System.out.println("check **********************");
+			result = userService.verifyCredentials(userId, password);
+		} catch (UserNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
 
 
 }
