@@ -1,18 +1,24 @@
 package com.lt.crs.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lt.crs.model.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crs.lt.exceptions.StudentException;
 import com.crs.lt.exceptions.UserNotFoundException;
 import com.lt.crs.model.User;
 import com.lt.crs.service.UserService;
@@ -68,10 +74,9 @@ public class UserCRSRestApi {
 			@PathVariable(value = "password") String password) {
 		boolean result;
 		try {
-
-			System.out.println("check **********************");
 			result = userService.verifyCredentials(userId, password);
 		} catch (UserNotFoundException e) {
+			System.out.println(e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -79,5 +84,51 @@ public class UserCRSRestApi {
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<?> login(@RequestParam(value = "userId") String userId,
+			@RequestParam(value = "password") String password) throws UserNotFoundException, SQLException {
+		String result;
+		try {
+			result = userService.login(userId, password);
+		} catch (UserNotFoundException e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
 
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/user/updatePassword")
+	@ResponseBody
+	public ResponseEntity<?> updatePassword(@RequestParam(value = "userId") String userId,
+			@RequestParam(value = "newPassword") String newPassword) {
+		boolean result;
+		try {
+			result = userService.updatePassword(userId, newPassword);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/register")
+	@ResponseBody
+	public ResponseEntity<?> register(@RequestBody Student student) throws Exception {
+		boolean result = false ;
+		try {
+			 result = userService.register(student);
+		}
+		catch (StudentException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(" you are successfully registered, please wait for Admin's Approval" + result);
+	}
+
+	
 }
