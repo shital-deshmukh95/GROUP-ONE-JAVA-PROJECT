@@ -30,7 +30,11 @@ public class UserCRSRestApi {
 	@Autowired
 	UserService userService;
 
-
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/user/getName/{userId}")
 	@ResponseBody
 	public ResponseEntity<?> getName(@PathVariable("userId") String userId) {
@@ -42,8 +46,12 @@ public class UserCRSRestApi {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
-	
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/user/getRole/{userId}")
 	@ResponseBody
 	public ResponseEntity<?> getRole(@PathVariable("userId") String userId) {
@@ -55,7 +63,11 @@ public class UserCRSRestApi {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
- 
+
+	/**
+	 * @param :NA
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/user/getAllUser")
 	@ResponseBody
 	public ResponseEntity<?> getAllUser() {
@@ -68,6 +80,12 @@ public class UserCRSRestApi {
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/user/verifyCredentials/{userId}/{password}")
 	@ResponseBody
 	public ResponseEntity<?> verifyCredentials(@PathVariable(value = "userId") String userId,
@@ -84,10 +102,16 @@ public class UserCRSRestApi {
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> login(@RequestParam(value = "userId") String userId,
-			@RequestParam(value = "password") String password) throws UserNotFoundException, SQLException {
+			@RequestParam(value = "password") String password)  {
 		String result;
 		try {
 			result = userService.login(userId, password);
@@ -100,26 +124,38 @@ public class UserCRSRestApi {
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
-	
+/**
+ * 
+ * @param userId
+ * @param newPassword
+ * @return
+ */
 	@RequestMapping(method = RequestMethod.PUT, value = "/user/updatePassword")
 	@ResponseBody
 	public ResponseEntity<?> updatePassword(@RequestParam(value = "userId") String userId,
+			@RequestParam(value = "password") String  password ,
 			@RequestParam(value = "newPassword") String newPassword) {
 		boolean result;
 		try {
-			result = userService.updatePassword(userId, newPassword);
+			result = userService.updatePassword(userId,password, newPassword);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
-	
+
+	/**
+	 * 
+	 * @param student
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
 	@ResponseBody
 	public ResponseEntity<?> register(@RequestBody Student student) throws Exception {
 		boolean result = false ;
 		try {
-			 result = userService.register(student);
+			result = userService.register(student);
 		}
 		catch (StudentException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -130,5 +166,5 @@ public class UserCRSRestApi {
 		return ResponseEntity.status(HttpStatus.OK).body(" you are successfully registered, please wait for Admin's Approval" + result);
 	}
 
-	
+
 }
