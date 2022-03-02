@@ -19,6 +19,7 @@ import com.crs.lt.exceptions.CourseExistsAlreadyException;
 import com.crs.lt.exceptions.CourseNotDeletedException;
 import com.crs.lt.exceptions.CourseNotFoundException;
 import com.crs.lt.exceptions.StudentException;
+import com.lt.crs.model.Catalog;
 import com.lt.crs.service.AdminService;
 
 @RestController
@@ -35,26 +36,19 @@ public class AdminCRSRestApi {
 	//	RegistrationService registrationService;
 	//	private static Logger logger =Logger.getLogger(AdminCRSRestApi.class);
 	//	
-	//	 @RequestMapping( method = RequestMethod.GET,value = "/admin/courses")
-	//		@ResponseBody
-	//	private ResponseEntity<?>  viewCourses() throws SQLException {
-	//		 System.out.println("In view courses");
-	//		List<Catalog> courseList = new ArrayList<>();
-	//		try {
-	//			courseList = adminService.viewCourses();
-	//			if(courseList.size() == 0) {
-	//				logger.error("Nothing present in the catalogue!");
-	//				return ResponseEntity.status(HttpStatus.OK).body(courseList);
-	//			}
-	//			logger.info("Courses present in the course catalogue!!");
-	//			return ResponseEntity.status(HttpStatus.OK).body(courseList);
-	//		} catch (Exception e) {
-	//			// TODO Auto-generated catch block
-	//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
-	//		}
-	//		
-	//	}
-	//	 
+
+	@RequestMapping(method = RequestMethod.GET, value = "/admin/viewCourses")
+	@ResponseBody
+	public ResponseEntity<?> viewCourses() {
+		List<Catalog> result = new ArrayList<Catalog>();
+		try {
+			//result = adminService.viewCourses();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+	
 	//	 
 	//	 @RequestMapping(produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, method = RequestMethod.POST,value = "/admin/addCourse")
 	//		@ResponseBody

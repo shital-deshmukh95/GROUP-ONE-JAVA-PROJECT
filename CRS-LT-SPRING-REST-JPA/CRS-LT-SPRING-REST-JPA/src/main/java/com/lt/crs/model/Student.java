@@ -9,7 +9,7 @@ import javax.persistence.Transient;
 /**
  * 
  * @author user215
- *  Model class for User
+ *  Model class for student
  */
 @Entity
 @Table(name = "student")

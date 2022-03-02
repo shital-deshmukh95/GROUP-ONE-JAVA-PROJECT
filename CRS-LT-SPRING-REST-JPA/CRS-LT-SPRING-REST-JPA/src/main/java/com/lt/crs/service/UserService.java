@@ -21,10 +21,13 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository ;
-	
+
 	@Autowired
 	StudentService studentService;
-
+	/**
+	 * 
+	 * @return
+	 */
 	public List<User> getAllUser() {
 		return   (List<User>)userRepository.findAll();
 	}
@@ -60,7 +63,13 @@ public class UserService {
 		return  role;
 	}
 
-
+	/**
+	 * 
+	 * @param userId
+	 * @param password
+	 * @return
+	 * @throws UserNotFoundException
+	 */
 	public boolean verifyCredentials(String userId, String password) throws UserNotFoundException {
 		boolean  result = false;
 		Optional<User> user =  userRepository.findById(userId);
@@ -80,7 +89,15 @@ public class UserService {
 		return result;
 	}
 
-	//login 
+	/**
+	 * 
+	 * @param userId
+	 * @param password
+	 * @return
+	 * @throws UserNotFoundException
+	 * @throws StudentException
+	 */
+
 	public String login(String userId ,String password) throws UserNotFoundException, StudentException {
 		System.out.println(userId);
 		System.out.println(password);
@@ -111,30 +128,38 @@ public class UserService {
 			}
 		}
 
-	if(!isValidated) {
-		UserNotFoundException e = new UserNotFoundException();
-		e.setMessage("Check the Credintial with the userID : " + userId);
-		throw e;
-	}
-
-
-
-	return result;
-
-
-}
-
-
-	public boolean updatePassword(String userId, String newPassword) throws UserNotFoundException {
-		boolean  result = false;
-		Optional<User> userOptional =  userRepository.findById(userId);
-
-		if(!userOptional.isPresent()) {
+		if(!isValidated) {
 			UserNotFoundException e = new UserNotFoundException();
-			e.setMessage("User Not found with the userID : " + userId);
+			e.setMessage("Check the Credintial with the userID : " + userId);
 			throw e;
 		}
 
+
+
+		return result;
+
+
+	}
+
+	/**
+	 * 
+	 * @param userId
+	 * @param password
+	 * @param newPassword
+	 * @return
+	 * @throws UserNotFoundException
+	 */
+	public boolean updatePassword(String userId, String password,String newPassword) throws UserNotFoundException {
+		boolean  result = false;
+		boolean isVerify = this.verifyCredentials(userId, password);
+
+		if(!isVerify) {
+			UserNotFoundException e = new UserNotFoundException();
+			e.setMessage("Please check the Credintial : " + userId);
+			throw e;
+		}
+
+		Optional<User> userOptional =  userRepository.findById(userId);
 		if(userOptional.isPresent()) {
 			User user = userOptional.get();
 			user.setPassword(newPassword);
@@ -144,11 +169,16 @@ public class UserService {
 		return result;
 	}
 
-
+	/**
+	 * 
+	 * @param student
+	 * @return
+	 * @throws StudentException
+	 */
 	public boolean register(Student student) throws StudentException {
-		
+
 		Optional<User> op = userRepository.findById(student.getStudentId());
-		
+
 		if(op.isPresent()) {
 			StudentException e = new StudentException();
 			e.setMessage("Duplicate userId : " + student.getStudentId());
@@ -163,25 +193,25 @@ public class UserService {
 		if(student.getRole()==null) {
 			user.setRole("STUDENT");
 		}else {
-		user.setRole(student.getRole());
+			user.setRole(student.getRole());
 		}
 		user.setUserId(student.getStudentId());
 		userRepository.save(user);
-		
+
 		student.setIsApproved("0");
 		student.setIsRegistered("0");
 		student.setIsPaid("0");
 		student.setIsReportGenerated("0");
-		
+
 		String stusentId = studentService.register(student);
 		if(stusentId!=null) {
 			isRegister = true ;
 		}
 		return isRegister;
 	}
-	
-	
-	
+
+
+
 
 
 }
