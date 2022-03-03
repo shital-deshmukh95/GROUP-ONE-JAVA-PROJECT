@@ -16,10 +16,13 @@ import com.lt.crs.model.RegisteredCourse;
  */
 public interface RegisteredCourseRepository extends CrudRepository<RegisteredCourse, String> {
 
-	@Query(value = "select * from course inner join registeredcourse on course.courseCode = registeredcourse.courseCode where registeredcourse.studentId =:studentId " ,nativeQuery = true)
-	List<Course> viewRegisteredCourses(@Param(value = "studentId")String studentId);
+	@Query("select c from Course c inner join RegisteredCourse r on c.courseCode = r.courseCode where r.studentId =:studentId ")
+	public List<Course> viewRegisteredCourses(@Param(value = "studentId")String studentId);
 
 	int deleteByCourseCodeAndStudentId(String courseCode, String studentId);
 	
+	@Query(value = "select sum(courseFee) from course where courseCode in (select courseCode from registeredcourse where studentId=:studentId)",nativeQuery=true)
+	public double calulateFee(@Param(value = "studentId")String studentId);
+
 
 }
