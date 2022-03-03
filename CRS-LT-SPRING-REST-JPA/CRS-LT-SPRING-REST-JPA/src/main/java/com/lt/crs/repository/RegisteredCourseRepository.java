@@ -24,5 +24,7 @@ public interface RegisteredCourseRepository extends CrudRepository<RegisteredCou
 	@Query(value = "select sum(courseFee) from course where courseCode in (select courseCode from registeredcourse where studentId=:studentId)",nativeQuery=true)
 	public double calulateFee(@Param(value = "studentId")String studentId);
 
+	public List<RegisteredCourse> findByCourseCodeAndStudentId(String courseID, String studentID);
+
 
 }

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.crs.lt.constant.GenderConstant;
 import com.crs.lt.constant.RoleConstant;
@@ -15,9 +16,9 @@ import com.crs.lt.constant.RoleConstant;
  */
 @Entity
 @Table(name = "professor")
-public class Professor extends User {
+public class Professor  {
 
-	
+	@Id
 	@Column(name = "instructorId")
 	private String professorID;
 
@@ -26,22 +27,31 @@ public class Professor extends User {
 
 	@Column(name = "designation")
 	private String designation;
+	
+//	@Transient
+//	public  String address;
+//	
+//	@Transient
+//	public  String gender;
+//	
+//	@Transient
+//	public  String name;
+//	
+//	@Transient
+//	public  String password;
+//	
+//	@Transient
+//	public  String role="PROFESSOR";
 
 	public Professor() {
 		super();
 	}
 
-	public Professor(String userId, String name, RoleConstant role, String password, GenderConstant gender, String address,
-			String professorID, String department, String designation) {
-		super(userId, name, role, password, gender, address);
-		this.professorID = professorID;
-		this.department = department;
-		this.designation = designation;
-	}
+	
 
 	public Professor(String userId, String name, RoleConstant role, String password, GenderConstant gender,
 			String address) {
-		super(userId, name, role, password, gender, address);
+		super();
 	}
 
 

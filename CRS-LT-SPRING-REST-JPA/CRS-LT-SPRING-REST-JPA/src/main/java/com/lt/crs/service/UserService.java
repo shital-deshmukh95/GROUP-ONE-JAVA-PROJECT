@@ -199,7 +199,7 @@ public class UserService {
 		userRepository.save(user);
 
 		student.setIsApproved("0");
-		student.setIsRegistered("0");
+		student.setIsRegistered("1");
 		student.setIsPaid("0");
 		student.setIsReportGenerated("0");
 

@@ -20,10 +20,11 @@ import javax.persistence.Table;
 public class RegisteredCourse {
 	
 	
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//int registerCourseId;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int rid;
+	
+	//@Id
 	@Column(name = "studentId")
 	public String studentId;
 

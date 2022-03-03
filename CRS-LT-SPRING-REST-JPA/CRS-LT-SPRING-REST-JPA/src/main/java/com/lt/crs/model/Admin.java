@@ -10,30 +10,31 @@ import com.crs.lt.constant.RoleConstant;
 
 @Entity
 @Table(name = "admin")
-public class Admin extends User {
+public class Admin  {
 
 
-	//@Id
-	public String adminId;
+	@Id
+	@Column(name = "adminId")
+	private  String adminId;
 
 	public Admin() {
 		super();
 	}
 
-	public Admin(String userId2, String name2, RoleConstant role2, String password2, GenderConstant gender2,
-			String address2) {
-		super(userId2, name2, role2, password2, gender2, address2);
-		// TODO Auto-generated constructor stub
-	}
-
-	public Admin(String userId, String password, String name, String gender, String address, String role) {
-		super(userId, password, name, gender, address, role);
-		// TODO Auto-generated constructor stub
-	}
+//	public Admin(String userId2, String name2, RoleConstant role2, String password2, GenderConstant gender2,
+//			String address2) {
+//		super(userId2, name2, role2, password2, gender2, address2);
+//		// TODO Auto-generated constructor stub
+//	}
+//
+//	public Admin(String userId, String password, String name, String gender, String address, String role) {
+//		super(userId, password, name, gender, address, role);
+//		// TODO Auto-generated constructor stub
+//	}
 
 	public Admin(String userId, String name, String role, String password, String gender, String address,
 			String adminID) {
-		super(userId, name, role, password, gender, address);
+		//super(userId, name, role, password, gender, address);
 		this.adminId = adminID;
 	}
 	

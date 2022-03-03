@@ -55,7 +55,7 @@ public class ProfessorCRSRestApi
 	@RequestMapping(method = RequestMethod.GET, value = "/getProfessorById")
 	@ResponseBody
 	public ResponseEntity<?> getProfessorById(@RequestParam("profId") String profId) {
-		String result;
+		Professor result;
 		try {
 			result = professorService.getProfessorById(profId);
 		} catch (Exception e) {
@@ -67,13 +67,10 @@ public class ProfessorCRSRestApi
 	@RequestMapping(method = RequestMethod.GET, value = "/viewEnrolledStudents/{profId}")
 	@ResponseBody
 	public ResponseEntity<?> viewEnrolledStudents(@PathVariable("profId") String profId) {
-//		 if (userService.user == null || !userService.user.getRole().equals(RoleConstant.PROFESSOR)) {
-//	            logger.info("Error: User not authenticated.");
-//	            return null;
-//	        }
+
 		List<EnrolledStudent> result = new ArrayList<EnrolledStudent>();
 		try {
-			//result = professorService.viewEnrolledStudents(profId);
+			result = professorService.viewEnrolledStudents(profId);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

@@ -26,6 +26,7 @@ import com.lt.crs.model.Course;
 import com.lt.crs.model.Grade;
 import com.lt.crs.model.PaymentInfo;
 import com.lt.crs.model.RegisterCourseModelClass;
+import com.lt.crs.model.RegisteredCourse;
 import com.lt.crs.service.RegisteredCourseService;
 import com.lt.crs.service.StudentService;
 
@@ -63,7 +64,7 @@ public class StudentCRSRestApi {
 
 		try {
 
-			boolean b = registeredCourseService.addCourse(courseCode,studentId);
+			boolean b = registeredCourseService.addCourse(courseCode,studentId,new RegisteredCourse());
 		} catch (StudentException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
