@@ -3,6 +3,7 @@ package com.lt.crs.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+//import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,24 +50,17 @@ public class AdminCRSRestApi {
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 	
-	//	 
-	//	 @RequestMapping(produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON, method = RequestMethod.POST,value = "/admin/addCourse")
-	//		@ResponseBody
-	//	    public ResponseEntity<?> addCourse(@RequestBody Catalog course) throws SQLException, CourseExistsAlreadyException {
-	//		
-	//	       
-	//		 List<Catalog> courseList = adminService.viewCourses();
-	//	        try {
-	//	        	adminService.addCourse(course, courseList);
-	//	        	List<Catalog> courseListView = adminService.viewCourses();
-	//	        	return ResponseEntity.status(HttpStatus.OK).body(courseListView);
-	//	        }
-	//	        catch(SQLException | CourseExistsAlreadyException e){
-	//	        	logger.error(e.getMessage());
-	//	        	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-	//	        }
-	//	       
-	//	    }
+		 
+		 @RequestMapping(method = RequestMethod.POST,value = "/admin/addCourse")
+			@ResponseBody
+		    public ResponseEntity<?> addCourse(@RequestBody Catalog course) throws SQLException, CourseExistsAlreadyException {
+			
+		       
+			//	adminService.addCourse(course, courseList);
+				//List<Catalog> courseListView = adminService.viewCourses();
+				return ResponseEntity.status(HttpStatus.OK).body(null);
+		       
+		    }
 	//	 
 	//	 /**
 	//		 * /admin/deleteCourse
@@ -76,23 +70,23 @@ public class AdminCRSRestApi {
 	//	 * @throws SQLException 
 	//		 */
 	//		
-	//		 @RequestMapping(method = RequestMethod.DELETE,value = "/deleteCourse")
-	//		@ResponseBody
-	//		public ResponseEntity<?> deleteCourse(
-	//				@RequestParam( value = "courseCode") String courseCode) throws SQLException {
-	//			List<Catalog> courseList = adminService.viewCourses();
-	//			
-	//			try {
-	//				
-	//				adminService.removeCourse(courseCode, courseList);
-	//				return ResponseEntity.status(HttpStatus.OK).body("Course with courseCode: " + courseCode + " deleted from catalog");
-	//			
-	//			} catch (CourseNotFoundException| CourseNotDeletedException | SQLException e) {
-	//				
-	//				return ResponseEntity.status(409).body(e.getMessage());
-	//			
-	//			}	
-	//		}
+			 @RequestMapping(method = RequestMethod.DELETE,value = "/deleteCourse")
+			@ResponseBody
+			public ResponseEntity<?> deleteCourse(
+					@RequestParam( value = "courseCode") String courseCode) throws SQLException {
+				//List<Catalog> courseList = adminService.viewCourses();
+				
+				try {
+					
+					adminService.removeCourse(courseCode);
+					return ResponseEntity.status(HttpStatus.OK).body("Course with courseCode: " + courseCode + " deleted from catalog");
+				
+				} catch (Exception e) {
+					
+					return ResponseEntity.status(409).body(e.getMessage());
+				
+				}	
+			}
 
 	@RequestMapping(method = RequestMethod.POST,value = "/admin/approve")
 	@ResponseBody

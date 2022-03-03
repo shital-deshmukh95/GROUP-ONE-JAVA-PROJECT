@@ -34,7 +34,9 @@ public class RegisteredCourseService {
 	@Autowired
 	CourseRepository courseRepository;
 
-	public boolean addCourse(String courseCode,String studentId) throws StudentException, CourseNotFoundException {
+	public boolean addCourse(String courseCode,String studentId , RegisteredCourse registeredCourse) throws StudentException, CourseNotFoundException {
+		System.out.println(courseCode);
+		
 		boolean result =false;
 		Optional<Student> student =	studentRepository.findById(studentId);
 		if(student.isPresent()) {
@@ -63,10 +65,11 @@ public class RegisteredCourseService {
 			}
 
 			String grade="-";
-			RegisteredCourse registeredCourse=new RegisteredCourse();
+			
 			registeredCourse.setCourseCode(courseCode);
 			registeredCourse.setStudentId(studentId);
 			registeredCourse.setGrade(grade);
+			System.out.println(registeredCourse.toString());
 			registrationRepository.save(registeredCourse);
 			Optional<Course> courseOptional = courseRepository.findById(courseCode);
 			if(courseOptional.isPresent()) {

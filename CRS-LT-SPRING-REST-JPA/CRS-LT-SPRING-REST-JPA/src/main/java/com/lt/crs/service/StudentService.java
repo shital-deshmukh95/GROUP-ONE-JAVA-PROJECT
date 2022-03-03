@@ -198,10 +198,14 @@ public class StudentService {
 
 		//	List<Course> registeredCourseList = this.viewRegisteredCourses(studentId);
 
-			for (String courseCode : courseList.getCourseList())
-				registeredCourseService.addCourse(courseCode, studentId);
-			registeredCourseService.setRegistrationStatus(studentId);
-
+			for (String courseCode : courseList.getCourseList()) {
+				System.out.println(courseCode);
+				RegisteredCourse registeredCourse=new RegisteredCourse();
+				if(registeredCourseService.addCourse(courseCode, studentId,registeredCourse)) {
+					System.out.println("if****************");
+			     registeredCourseService.setRegistrationStatus(studentId);
+			     }
+			    }
 			return true;
 		}
 
