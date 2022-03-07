@@ -58,43 +58,9 @@ public class AdminService {
 		return isApprove;
 	}
 	
-//	public List<Catalog> viewCourses() {
-//
-//		return catalogRepository.findAll();
-//		// TODO Auto-generated method stub
-//		//return adminRepository.viewCourses(); 
-//	}
-	
-	public List<Catalog> viewCourses(String profId) {
-		
-//		
-//        List<EnrolledStudent>  enrolledStudentList  = new ArrayList<EnrolledStudent>();
-//		
-//		List<Object> result = professorRepository.viewEnrolledStudent(profId);
-//		for(Object eachResult : result){
-//			EnrolledStudent  enrolledStudent  = new EnrolledStudent();
-//			Object[] obj =(Object[]) eachResult;
-//			if(obj[0]!=null) {
-//				String courseCode =obj[0].toString();
-//				System.out.println(courseCode);
-//				enrolledStudent.setCourseCode(courseCode);
-//			}
-//			if(obj[1]!=null) {
-//				String courseName =obj[1].toString();
-//				System.out.println(courseName);
-//				enrolledStudent.setCourseName(courseName);
-//			}
-//
-//			if(obj[2]!=null) {
-//				String studentId =obj[2].toString();
-//				System.out.println(studentId);
-//				enrolledStudent.setStudentId(studentId);
-//			}
-//			enrolledStudentList.add(enrolledStudent);
-//			
-//		}
-		return null;
-		
+	public List<Catalog> viewCourses() {
+		 List<Catalog> list =  (List<Catalog>) catalogRepository.findAll();
+		 return list;
 	}
 
 
