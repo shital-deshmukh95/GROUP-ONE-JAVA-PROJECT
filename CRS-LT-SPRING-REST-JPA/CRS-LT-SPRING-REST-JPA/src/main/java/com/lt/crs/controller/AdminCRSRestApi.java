@@ -43,7 +43,7 @@ public class AdminCRSRestApi {
 	public ResponseEntity<?> viewCourses() {
 		List<Catalog> result = new ArrayList<Catalog>();
 		try {
-			//result = adminService.viewCourses();
+			result = adminService.viewCourses();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
